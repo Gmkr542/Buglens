@@ -1,0 +1,222 @@
+/* ─────────────────────────────────────────
+   RESET & GLOBAL
+───────────────────────────────────────── */
+* {
+  margin: 0;
+  padding: 0;
+  box-sizing: border-box;
+}
+
+body {
+  background: #0a0c0f;
+  color: #c8d8e8;
+  font-family: 'JetBrains Mono', monospace;
+  height: 100vh;
+}
+
+/* ─────────────────────────────────────────
+   LAYOUT
+───────────────────────────────────────── */
+.app {
+  display: flex;
+  flex-direction: column;
+  height: 100vh;
+}
+
+.main {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  height: 100%;
+}
+
+.panel {
+  display: flex;
+  flex-direction: column;
+}
+
+.panel-left {
+  border-right: 1px solid #1e2730;
+}
+
+/* ─────────────────────────────────────────
+   HEADER
+───────────────────────────────────────── */
+header {
+  display: flex;
+  justify-content: space-between;
+  padding: 16px 24px;
+  border-bottom: 1px solid #1e2730;
+  background: #0f1318;
+}
+
+.logo {
+  font-size: 18px;
+  font-weight: bold;
+}
+
+.logo span {
+  color: #00e5a0;
+}
+
+/* ─────────────────────────────────────────
+   EDITOR
+───────────────────────────────────────── */
+.editor-wrap {
+  position: relative;
+  flex: 1;
+  background: #13181f;
+}
+
+textarea {
+  width: 100%;
+  height: 100%;
+  padding: 20px;
+  background: transparent;
+  border: none;
+  outline: none;
+  resize: none;
+  color: #9de8c0;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* ─────────────────────────────────────────
+   BUTTONS
+───────────────────────────────────────── */
+.controls {
+  padding: 12px 20px;
+  border-top: 1px solid #1e2730;
+  background: #0f1318;
+}
+
+button {
+  padding: 8px 16px;
+  border-radius: 6px;
+  border: none;
+  cursor: pointer;
+  font-size: 12px;
+}
+
+.btn-debug {
+  background: #00e5a0;
+  color: black;
+  font-weight: bold;
+}
+
+.btn-debug:hover {
+  box-shadow: 0 0 10px rgba(0,229,160,0.5);
+}
+
+.btn-clear {
+  background: transparent;
+  border: 1px solid #2a3542;
+  color: #aaa;
+}
+
+.btn-clear:hover {
+  border-color: #ff3e5e;
+  color: #ff3e5e;
+}
+
+/* ─────────────────────────────────────────
+   OUTPUT PANEL
+───────────────────────────────────────── */
+.output-panel {
+  padding: 20px;
+  overflow-y: auto;
+  background: #0f1318;
+}
+
+/* ─────────────────────────────────────────
+   RESULT BLOCKS
+───────────────────────────────────────── */
+.result-section {
+  margin-bottom: 16px;
+  border: 1px solid #2a3542;
+  border-radius: 6px;
+}
+
+.section-header {
+  padding: 10px;
+  background: #13181f;
+  font-size: 12px;
+  font-weight: bold;
+  cursor: pointer;
+}
+
+.section-body {
+  padding: 12px;
+  font-size: 13px;
+  line-height: 1.6;
+}
+
+/* ─────────────────────────────────────────
+   ERROR BOX
+───────────────────────────────────────── */
+.error-item {
+  padding: 10px;
+  margin-bottom: 8px;
+  background: rgba(255,62,94,0.08);
+  border-left: 3px solid #ff3e5e;
+  border-radius: 4px;
+}
+
+.error-msg {
+  font-size: 13px;
+}
+
+.error-type {
+  font-size: 11px;
+  color: #aaa;
+}
+
+/* ─────────────────────────────────────────
+   CODE BLOCK
+───────────────────────────────────────── */
+.code-block {
+  background: #0a0c0f;
+  border: 1px solid #2a3542;
+  border-radius: 6px;
+  padding: 10px;
+  overflow-x: auto;
+}
+
+pre {
+  color: #9de8c0;
+  font-size: 12px;
+}
+
+/* ─────────────────────────────────────────
+   LOADING
+───────────────────────────────────────── */
+.loading {
+  text-align: center;
+  padding: 40px;
+  color: #888;
+}
+
+/* ─────────────────────────────────────────
+   SCROLLBAR
+───────────────────────────────────────── */
+::-webkit-scrollbar {
+  width: 6px;
+}
+
+::-webkit-scrollbar-thumb {
+  background: #2a3542;
+  border-radius: 3px;
+}
+
+/* ─────────────────────────────────────────
+   RESPONSIVE
+───────────────────────────────────────── */
+@media (max-width: 768px) {
+  .main {
+    grid-template-columns: 1fr;
+  }
+
+  .panel-left {
+    border-right: none;
+    border-bottom: 1px solid #1e2730;
+  }
+}
