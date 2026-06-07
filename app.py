@@ -9,6 +9,7 @@ from fastapi import FastAPI, Request
 from fastapi.responses import HTMLResponse
 from fastapi.staticfiles import StaticFiles
 from fastapi.templating import Jinja2Templates
+from fastapi import Response
 
 from routes.debug import router as debug_router
 from routes.chatbot import router as chatbot_router
@@ -101,6 +102,21 @@ async def chat_page(request: Request):
     history = load_history()
     return templates.TemplateResponse(request=request, name="chat.html", context={"history": history})
 
+
+@app.get("/health")
+async def health():
+    return {
+        "status": "healthy",
+        "service": "BugLens AI Debugger"
+    }
+
+@app.head("/status")
+async def status():
+    return Response(status_code=200)
+
+@app.get("/status")
+async def status_get():
+    return {"status": "ok"}
 
 # ==========================================
 # ENTRY POINT
