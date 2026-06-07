@@ -1,3 +1,4 @@
+<<<<<<< HEAD
 # BugLens — AI Code Debugger
 
 A FastAPI application that analyzes code with Groq LLM and includes a simple chatbot.
@@ -110,3 +111,6 @@ curl http://127.0.0.1:5000/chatbot/history
 - **SSL errors** — Set `GROQ_VERIFY_SSL=false` temporarily for debugging
 - **DNS errors** — Check internet access to `api.groq.com`
 - **Proxy** — Set `HTTP_PROXY` / `HTTPS_PROXY` environment variables
+=======
+# Buglens
+>>>>>>> 0d26580cb80b8bcb3fbdf2d40e8147a79faabf90

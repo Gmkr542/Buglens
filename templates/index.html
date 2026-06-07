@@ -51,31 +51,6 @@
 
     .app { position: relative; z-index: 1; display: flex; flex-direction: column; min-height: 100vh; }
 
-    /* ── KEY BAR ── */
-    #keyBanner {
-      display: flex; align-items: center; gap: 14px; flex-wrap: wrap;
-      padding: 9px 28px;
-      background: linear-gradient(90deg, rgba(0,229,160,0.07), rgba(0,150,255,0.07));
-      border-bottom: 1px solid rgba(0,229,160,0.18);
-    }
-    .banner-label { display: flex; align-items: center; gap: 7px; color: var(--accent); font-size: 11px; letter-spacing: 1.4px; text-transform: uppercase; white-space: nowrap; }
-    .free-pill { background: rgba(0,229,160,0.13); border: 1px solid rgba(0,229,160,0.3); border-radius: 100px; color: var(--accent); font-size: 10px; font-weight: 700; padding: 2px 8px; }
-    #keyInput {
-      flex: 1; min-width: 220px; max-width: 380px;
-      background: rgba(0,0,0,0.5); border: 1px solid var(--border2); border-radius: 6px;
-      padding: 7px 12px; color: var(--text); font-family: var(--mono); font-size: 12px; outline: none;
-    }
-    #keyInput:focus { border-color: var(--accent); }
-    .btn-save-key {
-      padding: 7px 15px; background: var(--accent); color: #000;
-      border: none; border-radius: 6px; font-family: var(--mono); font-size: 12px; font-weight: 700; cursor: pointer;
-      transition: box-shadow 0.15s;
-    }
-    .btn-save-key:hover { box-shadow: 0 0 16px rgba(0,229,160,0.35); }
-    .key-status { font-size: 11px; color: var(--text-dim); white-space: nowrap; }
-    .key-status.set { color: var(--ok); }
-    .get-key-link { color: var(--accent2); text-decoration: none; font-size: 11px; margin-left: auto; white-space: nowrap; }
-
     /* ── HEADER ── */
     header {
       display: flex; justify-content: space-between; align-items: center;
@@ -377,7 +352,7 @@
     @media (max-width: 768px) {
       .main { grid-template-columns: 1fr; }
       .panel-left { border-right: none; border-bottom: 1px solid var(--border); }
-      header, #keyBanner { padding-left: 16px; padding-right: 16px; }
+      header { padding-left: 16px; padding-right: 16px; }
       .panel-header { flex-wrap: wrap; gap: 8px; padding: 10px 14px; }
       .controls { padding: 12px 14px; }
       .output-menu { width: 100%; }
@@ -395,18 +370,6 @@
 </head>
 <body>
 <div class="app">
-
-  <!-- KEY BAR -->
-  <div id="keyBanner">
-    <div class="banner-label">
-      <span class="free-pill">FREE</span>
-      Grok API Key
-    </div>
-    <input type="password" id="keyInput" placeholder="Paste your xAI Grok token…" />
-    <button class="btn-save-key" onclick="saveKey()">Save Key</button>
-    <div class="key-status" id="keyStatus"><span>No key set</span></div>
-    <a class="get-key-link" href="https://console.x.ai" target="_blank">Get token →</a>
-  </div>
 
   <!-- HEADER -->
   <header>
@@ -592,12 +555,7 @@
       <div id="progressBar"><div class="fill"></div></div>
 
       <div class="output-panel" id="outputPanel">
-        <div class="key-required" id="keyRequired">
-          <div class="empty-icon">🔑</div>
-          <h3>Add your Grok API key</h3>
-          <p>Save your API token above to start debugging Python code.</p>
-        </div>
-        <div class="empty-state" id="emptyState" style="display:none">
+        <div class="empty-state" id="emptyState" style="display:flex">
           <div class="empty-icon">⚡</div>
           <p>Paste Python code and click <strong>Debug Code</strong></p>
         </div>
@@ -634,27 +592,12 @@ async function loadJSZip() {
 }
 
 // ── STATE ──
-let apiKey = '';
 let currentResults = null;
 let openFiles = [];     // { name, content, size }
 let activeFile = null;
 let history = [];
 let settingsOpen = false;
 let opts = { autoFormat: false, showLines: true };
-
-// ── KEY MANAGEMENT ──
-function saveKey() {
-  const k = document.getElementById('keyInput').value.trim();
-  if (!k) return;
-  apiKey = k;
-  try { localStorage.setItem('buglens_api_key', k); } catch(e) {}
-  const st = document.getElementById('keyStatus');
-  st.innerHTML = '✓ Key saved';
-  st.classList.add('set');
-  document.getElementById('keyRequired').style.display = 'none';
-  document.getElementById('emptyState').style.display = 'flex';
-  showToast('API key saved ✓');
-}
 
 // ── THEME ──
 function toggleTheme() {
@@ -922,8 +865,7 @@ function switchOutput(val) {
 }
 
 function hideResults() {
-  document.getElementById('keyRequired').style.display = 'none';
-  document.getElementById('emptyState').style.display = apiKey ? 'flex' : 'none';
+  document.getElementById('emptyState').style.display = 'flex';
   document.getElementById('loadingState').style.display = 'none';
   document.getElementById('results').style.display = 'none';
   setProgressBar(false);
@@ -941,7 +883,6 @@ function showToast(msg, dur = 2200) {
 
 // ── DEBUG ──
 async function runDebug() {
-  if (!apiKey) { showToast('⚠ Set your API key first'); return; }
   const code = document.getElementById('codeInput').value.trim();
   if (!code) { showToast('⚠ No code to debug'); return; }
 
@@ -949,7 +890,6 @@ async function runDebug() {
   btn.disabled = true;
   document.getElementById('statusDot').className = 'dot';
   document.getElementById('statusLabel').textContent = 'scanning…';
-  document.getElementById('keyRequired').style.display = 'none';
   document.getElementById('emptyState').style.display = 'none';
   document.getElementById('results').style.display = 'none';
   document.getElementById('loadingState').style.display = 'flex';
@@ -983,7 +923,7 @@ ${severityFilter !== 'all' ? `\nOnly include issues with severity "${severityFil
     const res = await fetch('/debug/', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
-      body: JSON.stringify({ code: code, apiKey: apiKey })
+      body: JSON.stringify({ code: code })
     });
 
     if (!res.ok) {
@@ -1126,20 +1066,8 @@ function escHtml(s) {
 }
 
 // Init
-(function initSavedKey() {
-  try {
-    const saved = localStorage.getItem('buglens_api_key');
-    if (saved) {
-      apiKey = saved;
-      document.getElementById('keyInput').value = saved;
-      const st = document.getElementById('keyStatus');
-      if (st) { st.innerHTML = '✓ Key loaded'; st.classList.add('set'); }
-      const kr = document.getElementById('keyRequired');
-      if (kr) kr.style.display = 'none';
-      const es = document.getElementById('emptyState');
-      if (es) es.style.display = 'flex';
-    }
-  } catch(e) {}
+(function initPage() {
+  document.getElementById('emptyState').style.display = 'flex';
 })();
 updateLineNumbers();
 </script>
