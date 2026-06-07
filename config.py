@@ -4,7 +4,10 @@ import os
 #  GROQ  (free tier — https://console.groq.com)
 # ─────────────────────────────────────────────
 # Set GROQ_TOKEN in your environment or .env file — never hardcode keys here.
-GROQ_TOKEN    = os.getenv("GROQ_TOKEN", "")
+import os
+
+GROQ_API_KEY = os.getenv("GROQ_API_KEY")
+GROQ_TOKEN    = os.getenv("GROQ_TOKEN")
 GROQ_URL      = os.getenv("GROQ_URL",   "https://api.groq.com/openai/v1/chat/completions")
 GROQ_MODEL    = os.getenv("GROQ_MODEL", "llama-3.3-70b-versatile")
 GROQ_VERIFY_SSL = os.getenv("GROQ_VERIFY_SSL", "true").strip().lower() not in ("0", "false", "no")
