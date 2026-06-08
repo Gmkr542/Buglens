@@ -1,4 +1,4 @@
-# BugLens — AI Code Debugger
+# BugFalse — AI Code Debugger
 
 A FastAPI application that analyzes code with Groq LLM and includes a simple chatbot.
 
@@ -121,8 +121,8 @@ curl http://127.0.0.1:5000/chatbot/history
 
 ## Logs
 
-- `logs/buglens.log`      — Human-readable rotating log (max 5 MB × 3 backups)
-- `logs/buglens.json.log` — Structured JSON log for machine parsing
+- `logs/bugfalse.log`      — Human-readable rotating log (max 5 MB × 3 backups)
+- `logs/bugfalse.json.log` — Structured JSON log for machine parsing
 
 ## Troubleshooting
 

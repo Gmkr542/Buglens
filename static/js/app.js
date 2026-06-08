@@ -1,4 +1,4 @@
-// app.js — BugLens companion utilities
+// app.js — BugFalse companion utilities
 // NOTE: The main application logic is embedded in templates/index.html.
 // This file provides utility helpers that can be imported by other pages.
 

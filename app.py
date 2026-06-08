@@ -27,7 +27,7 @@ log_dir = os.path.join(os.path.dirname(__file__), 'logs')
 os.makedirs(log_dir, exist_ok=True)
 
 file_handler = RotatingFileHandler(
-    os.path.join(log_dir, 'buglens.log'),
+    os.path.join(log_dir, 'bugfalse.log'),
     maxBytes=5 * 1024 * 1024,
     backupCount=3
 )
@@ -58,7 +58,7 @@ class JSONFormatter(logging.Formatter):
 
 
 json_handler = RotatingFileHandler(
-    os.path.join(log_dir, 'buglens.json.log'),
+    os.path.join(log_dir, 'bugfalse.json.log'),
     maxBytes=5 * 1024 * 1024,
     backupCount=3
 )
@@ -74,7 +74,7 @@ logging.getLogger().addHandler(json_handler)
 base_dir = os.path.dirname(__file__)
 
 app = FastAPI(
-    title="BugLens AI Debugger",
+    title="BugFalse AI Debugger",
     description="AI-powered Python code debugger using Groq LLM",
     version="2.0.0"
 )
@@ -107,7 +107,7 @@ async def chat_page(request: Request):
 async def health():
     return {
         "status": "healthy",
-        "service": "BugLens AI Debugger"
+        "service": "BugFalse AI Debugger"
     }
 
 @app.head("/status")
